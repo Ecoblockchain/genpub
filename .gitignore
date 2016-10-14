@@ -1,0 +1,5 @@
+*.egg-*
+*tmp
+*.*~
+*.pyc
+client_secret.json
