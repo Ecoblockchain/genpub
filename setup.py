@@ -9,6 +9,7 @@ except ImportError:
 dependencies = [
   'docopt',
   'gitpython',
+  'tweepy',
   'google-api-python-client'
 ]
 

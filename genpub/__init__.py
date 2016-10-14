@@ -4,14 +4,16 @@
 """genpub
 
 Usage:
+  genpub twitter <file> [-m <message>]
   genpub drive <file>
   genpub -h
 
 Examples:
 
-  genpub drive file   Upload this file to google drive
-  -h                  Show this screen.
-  --version           Show version.
+  genpub twitter <file>   Upload this file to twitter (and google drive)
+  genpub drive <file>     Upload this file to google drive
+  -h                      Show this screen.
+  --version               Show version.
 """
 
 __ALL__ = ['genpub']
@@ -30,9 +32,23 @@ def main(args):
   from sys import stderr
   from sys import exit
 
+  # print(args)
+  # return
+
   try:
     with Genpub() as genpub:
-      genpub.pub(args['<file>'])
+      if 'drive' in args and args['drive']:
+        genpub.pub_drive(
+            args['<file>']
+            )
+      elif 'twitter' in args and args['twitter']:
+        genpub.pub_twitter(
+            args['<file>'],
+            args['<message>']
+            )
+      else:
+        # this cant happen
+        print('bad arguments, try: \ngenpub -h')
 
   except Exception as e:
     print(e, file=stderr)

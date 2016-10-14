@@ -9,30 +9,36 @@ from oauth2client import client
 from oauth2client import tools
 from oauth2client.file import Storage
 
+## google drive related code is adapted from google examples.
+
 # If modifying these scopes, delete your previously saved credentials
 # at ~/.credentials/drive-python-quickstart.json
+
+APPLICATION_NAME = 'genpub'
 SCOPES = 'https://www.googleapis.com/auth/drive.file'
-CLIENT_SECRET_FILE = 'client_secret.json'
-APPLICATION_NAME = 'Drive API Python Quickstart'
+DRIVE_CLIENT_SECRET_FILE = 'secrets/client_secret.json'
+TWITTER_SECRET_FILE = 'secrets/twitter_tokens.txt'
 
 ROOT_NAME = 'genpub'
 ROOT_META = {
-  'name' : ROOT_NAME,
-  'mimeType' : 'application/vnd.google-apps.folder'
-}
+    'name' : ROOT_NAME,
+    'mimeType' : 'application/vnd.google-apps.folder'
+    }
 
 class Genpub(object):
 
   def __init__(
-    self,
-  ):
+      self,
+      ):
+    import os
     self._get_service()
     self._ensure_folder()
+    self.realpath = os.path.dirname(os.path.realpath(__file__))
 
   def __enter__(self):
     return self
 
-  def __exit__(self ,type, value, traceback):
+  def __exit__(self, t, value, traceback):
     return False
 
   def _get_service(self):
@@ -57,7 +63,7 @@ class Genpub(object):
     store = Storage(credential_path)
     credentials = store.get()
     if not credentials or credentials.invalid:
-      flow = client.flow_from_clientsecrets(CLIENT_SECRET_FILE, SCOPES)
+      flow = client.flow_from_clientsecrets(DRIVE_CLIENT_SECRET_FILE, SCOPES)
       flow.user_agent = APPLICATION_NAME
       credentials = tools.run_flow(flow, store)
       print('Storing credentials to ' + credential_path)
@@ -104,7 +110,7 @@ class Genpub(object):
       sn = name
     return sn
 
-  def pub(self, name):
+  def pub_drive(self, name):
     from apiclient.http import MediaFileUpload
 
     # TODO: add git repo info?
@@ -125,4 +131,16 @@ class Genpub(object):
         ).execute()
     uploaded_id = file.get('id')
     self._move(uploaded_id)
+
+  def pub_twitter(self, name, status):
+    from .tweet import get_secrets
+    from .tweet import tweet_with_media
+    from os import sep
+
+    self.pub_drive(name)
+
+    # hack ...
+    rel = sep + '..' + sep
+    secrets = get_secrets(self.realpath + rel + TWITTER_SECRET_FILE)
+    tweet_with_media(name, secrets, status)
 

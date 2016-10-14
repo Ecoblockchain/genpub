@@ -2,4 +2,4 @@
 *tmp
 *.*~
 *.pyc
-client_secret.json
+secrets/

@@ -7,6 +7,7 @@ Publish a file to a given channel
 Currently supports
 
   - google drive
+  - twitter
 
 ## Usage
 
@@ -14,7 +15,7 @@ Currently supports
 
 ## Todo
 
-  - twitter
+  - resize for twitter
   - instagram?
   - ello?
   - facebook?
