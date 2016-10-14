@@ -4,15 +4,14 @@
 """genpub
 
 Usage:
-  genpub <file>
+  genpub drive <file>
   genpub -h
 
 Examples:
 
-  genpub         Nothing
-  genpub file    Store most recent image in directory 'dir'.
-  -h             Show this screen.
-  --version      Show version.
+  genpub drive file   Upload this file to google drive
+  -h                  Show this screen.
+  --version           Show version.
 """
 
 __ALL__ = ['genpub']
@@ -31,7 +30,6 @@ def main(args):
   from sys import stderr
   from sys import exit
 
-  # print(args)
   try:
     with Genpub() as genpub:
       genpub.pub(args['<file>'])

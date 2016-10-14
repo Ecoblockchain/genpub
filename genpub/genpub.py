@@ -81,33 +81,48 @@ class Genpub(object):
           ).execute()
       self.root_id = file.get('id')
 
-  def pub(self, name):
-    from apiclient.http import MediaFileUpload
-    media = MediaFileUpload(
-        name,
-        mimetype='image/png',
-        resumable=True
-        )
-    file = self.service.files().create(
-        body={
-            'name' : name,
-            'folderId': self.root_id
-            },
-        media_body=media,
-        fields='id'
-        ).execute()
-
-    uploaded_id = file.get('id')
-
-    uploaded_file = self.service.files().get(
-        fileId=uploaded_id,
+  def _move(self, fid):
+    service = self.service
+    uploaded_file = service.files().get(
+        fileId=fid,
         fields='parents'
-        ).execute();
+        ).execute()
     previous_parents = ",".join(uploaded_file.get('parents'))
-    updated_file = self.service.files().update(
-        fileId=uploaded_id,
+    moved_file = service.files().update(
+        fileId=fid,
         addParents=self.root_id,
         removeParents=previous_parents,
         fields='id, parents'
         ).execute()
+    return moved_file
+
+  def _get_short_name(self, name):
+    from os import sep
+    if sep in name:
+      sn = name.split(sep)[-1]
+    else:
+      sn = name
+    return sn
+
+  def pub(self, name):
+    from apiclient.http import MediaFileUpload
+
+    # TODO: add git repo info?
+    description = 'uploaded with genpub.'
+
+    sn = self._get_short_name(name)
+    media = MediaFileUpload(
+        name,
+        resumable=True
+        )
+    file = self.service.files().create(
+        body={
+            'name' : sn,
+            'description': description
+            },
+        media_body=media,
+        fields='id'
+        ).execute()
+    uploaded_id = file.get('id')
+    self._move(uploaded_id)
 
