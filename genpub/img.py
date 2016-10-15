@@ -10,7 +10,7 @@ def _copy_file(orig, tmp_path='/tmp/'):
     return full_target
   return False
 
-def _thumbnail(name, size):
+def _twitter_version(name, size):
   try:
     from PIL import Image
   except Exception:
@@ -26,8 +26,8 @@ def _thumbnail(name, size):
 
     if a >= 255:
       a = 254
+      pixels[0, 0] = r, g, b, a
 
-    pixels[0, 0] = r, g, b, a
     img.save(thumb)
 
   return thumb

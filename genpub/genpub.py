@@ -61,12 +61,12 @@ class Genpub:
     return [moved_file]
 
   def pub_twitter(self, name, status, rid):
-    from .tweet import _get_secrets
-    from .tweet import _tweet_with_media
-    from .img import _thumbnail
+    from .twitter import _get_secrets
+    from .twitter import _tweet_with_media
+    from .img import _twitter_version
 
     size = self.twitter_size
-    thumb = _thumbnail(name, size)
+    thumb = _twitter_version(name, size)
 
     if thumb:
       secrets = _get_secrets(self.secretpath + TWITTER_SECRET_FILE)
@@ -76,3 +76,4 @@ class Genpub:
     else:
       print('error when publishing to twitter')
       return []
+

@@ -7,28 +7,28 @@ except ImportError:
   from distutils.core import setup
 
 dependencies = [
-  'docopt',
-  'tweepy',
-  'google-api-python-client'
-]
+    'docopt',
+    'tweepy',
+    'google-api-python-client'
+    ]
 
 setup(
-  name='genpub',
-  version='0.0.2',
-  description='genpub',
-  url='',
-  license='MIT License',
-  author='Anders Hoff',
-  author_email='inconvergent@gmail.com',
-  install_requires=dependencies,
-  packages=[
-    'genpub'
-  ],
-  entry_points={
-    'console_scripts': [
-      'genpub=genpub:run'
-    ]
-  },
-  zip_safe=True
-)
+    name='genpub',
+    version='0.0.2',
+    description='genpub',
+    url='',
+    license='MIT License',
+    author='Anders Hoff',
+    author_email='inconvergent@gmail.com',
+    install_requires=dependencies,
+    packages=[
+        'genpub'
+        ],
+    entry_points={
+        'console_scripts': [
+            'genpub=genpub:run'
+            ]
+        },
+    zip_safe=True
+    )
 

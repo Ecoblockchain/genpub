@@ -1,14 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import print_function
-import httplib2
-
-from apiclient import discovery
-from oauth2client import client
-from oauth2client import tools
-from oauth2client.file import Storage
-
 ## google drive related code is adapted from google examples.
+## See The LICENSE file for details
 
 # If modifying these scopes, delete your previously saved credentials
 # at ~/.credentials/drive-python-quickstart.json
@@ -32,7 +25,14 @@ def _get_service(secretpath):
   Returns:
     Credentials, the obtained credential.
   """
+
   import os
+  import httplib2
+  from apiclient import discovery
+  from oauth2client import client
+  from oauth2client import tools
+  from oauth2client.file import Storage
+
   home_dir = os.path.expanduser('~')
   credential_dir = os.path.join(home_dir, '.credentials')
   if not os.path.exists(credential_dir):
