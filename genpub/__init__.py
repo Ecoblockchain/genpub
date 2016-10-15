@@ -4,7 +4,7 @@
 """genpub
 
 Usage:
-  genpub twitter <file> [-m <message>]
+  genpub twitter <file> [-m <message>] [-r <reply_to>]
   genpub drive <file>
   genpub -h
 
@@ -24,7 +24,7 @@ from genpub.genpub import Genpub
 def run():
 
   from docopt import docopt
-  args = docopt(__doc__, version='genpub 0.0.1')
+  args = docopt(__doc__, version='genpub 0.0.2')
   main(args)
 
 def main(args):
@@ -38,17 +38,20 @@ def main(args):
   try:
     with Genpub() as genpub:
       if args['drive']:
-        genpub.pub_drive(
+        res = genpub.pub_drive(
             args['<file>']
             )
+        # print(res)
       elif args['twitter']:
-        genpub.pub_twitter(
+        res = genpub.pub_twitter(
             args['<file>'],
-            args['<message>']
+            args['<message>'],
+            args['<reply_to>']
             )
+        # print(res)
       else:
         # this cant happen
-        print('bad arguments, try: \ngenpub -h')
+        print('bad arguments, see: \ngenpub -h')
 
   except Exception as e:
     print(e, file=stderr)

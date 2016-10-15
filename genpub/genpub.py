@@ -58,9 +58,9 @@ class Genpub:
         ).execute()
     uploaded_id = file.get('id')
     moved_file = _move(self.service, self.root_id, uploaded_id)
-    return moved_file
+    return [moved_file]
 
-  def pub_twitter(self, name, status):
+  def pub_twitter(self, name, status, rid):
     from .tweet import _get_secrets
     from .tweet import _tweet_with_media
     from .img import _thumbnail
@@ -70,7 +70,9 @@ class Genpub:
 
     if thumb:
       secrets = _get_secrets(self.secretpath + TWITTER_SECRET_FILE)
-      _tweet_with_media(thumb, secrets, status)
+      status = _tweet_with_media(thumb, secrets, status, rid)
       self.pub_drive(name)
+      return [status]
     else:
       print('error when publishing to twitter')
+      return []

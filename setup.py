@@ -15,7 +15,7 @@ dependencies = [
 
 setup(
   name='genpub',
-  version='0.0.1',
+  version='0.0.2',
   description='genpub',
   url='',
   license='MIT License',
