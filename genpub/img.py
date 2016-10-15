@@ -22,8 +22,12 @@ def _thumbnail(name, size):
     img = img.convert('RGBA')
     img.thumbnail((size, size))
     pixels = img.load()
-    p = pixels[0, 0]
-    pixels[0, 0] = p[:3] + (254,)
+    r, g, b, a = pixels[0, 0]
+
+    if a >= 255:
+      a = 254
+
+    pixels[0, 0] = r, g, b, a
     img.save(thumb)
 
   return thumb
