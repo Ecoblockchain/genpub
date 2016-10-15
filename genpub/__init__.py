@@ -37,12 +37,11 @@ def main(args):
 
   try:
     with Genpub() as genpub:
-      if 'drive' in args and args['drive']:
+      if args['drive']:
         genpub.pub_drive(
             args['<file>']
             )
-      elif 'twitter' in args and args['twitter']:
-        print('twitter')
+      elif args['twitter']:
         genpub.pub_twitter(
             args['<file>'],
             args['<message>']

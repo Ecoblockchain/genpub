@@ -28,6 +28,8 @@ class Genpub:
     self.service = _get_service(self.secretpath)
     self.root_id = _ensure_folder(self.service)
 
+    self.twitter_size = 1200
+
   def __enter__(self):
     return self
 
@@ -59,10 +61,16 @@ class Genpub:
     return moved_file
 
   def pub_twitter(self, name, status):
-    from .tweet import get_secrets
-    from .tweet import tweet_with_media
+    from .tweet import _get_secrets
+    from .tweet import _tweet_with_media
+    from .img import _thumbnail
 
-    self.pub_drive(name)
-    secrets = get_secrets(self.secretpath + TWITTER_SECRET_FILE)
-    tweet_with_media(name, secrets, status)
+    size = self.twitter_size
+    thumb = _thumbnail(name, size)
 
+    if thumb:
+      secrets = _get_secrets(self.secretpath + TWITTER_SECRET_FILE)
+      _tweet_with_media(thumb, secrets, status)
+      self.pub_drive(name)
+    else:
+      print('error when publishing to twitter')

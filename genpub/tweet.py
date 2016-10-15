@@ -3,7 +3,7 @@
 
 import tweepy
 
-def get_secrets(fn):
+def _get_secrets(fn):
   secrets = {}
   with open(fn, 'r') as f:
     for line in f.readlines():
@@ -11,7 +11,7 @@ def get_secrets(fn):
       secrets[k] = v
   return secrets
 
-def tweet_with_media(filename, secrets, status=None):
+def _tweet_with_media(filename, secrets, status=None):
   auth = tweepy.OAuthHandler(secrets['CONSUMER_KEY'], secrets['CONSUMER_SECRET'])
   auth.set_access_token(secrets['ACCESS_TOKEN'], secrets['ACCESS_TOKEN_SECRET'])
   api = tweepy.API(auth)
