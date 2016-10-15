@@ -42,6 +42,7 @@ def main(args):
             args['<file>']
             )
       elif 'twitter' in args and args['twitter']:
+        print('twitter')
         genpub.pub_twitter(
             args['<file>'],
             args['<message>']
