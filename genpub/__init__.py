@@ -4,7 +4,7 @@
 """genpub
 
 Usage:
-  genpub twitter <file> [-m <message>] [-r <reply_to>]
+  genpub twitter <file> [--status=STATUS] [--reply=REPLY]
   genpub drive <file>
   genpub -h
 
@@ -45,8 +45,8 @@ def main(args):
       elif args['twitter']:
         res = genpub.pub_twitter(
             args['<file>'],
-            args['<message>'],
-            args['<reply_to>']
+            args['--status'],
+            args['--reply']
             )
         # print(res)
       else:
