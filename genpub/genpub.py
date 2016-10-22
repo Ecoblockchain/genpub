@@ -66,11 +66,14 @@ class Genpub:
     from .img import _twitter_version
 
     size = self.twitter_size
-    thumb = _twitter_version(name, size)
+    if name.endswith('.png'):
+      tname = _twitter_version(name, size)
+    else:
+      tname = name
 
-    if thumb:
+    if tname:
       secrets = _get_secrets(self.secretpath + TWITTER_SECRET_FILE)
-      status = _tweet_with_media(thumb, secrets, status, rid)
+      status = _tweet_with_media(tname, secrets, status, rid)
       self.pub_drive(name)
       return [status]
     else:

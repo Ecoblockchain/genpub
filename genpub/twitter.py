@@ -26,9 +26,11 @@ def _tweet_with_media(
       secrets['ACCESS_TOKEN_SECRET']
       )
   api = tweepy.API(auth)
-  tid = api.update_with_media(
-      filename=filename,
+
+  pic = api.media_upload(filename=filename)
+  tid = api.update_status(
       status=status,
+      media_ids=[pic.media_id_string],
       in_reply_to_status_id=rid
       )
   return tid
